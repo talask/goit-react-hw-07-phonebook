@@ -14,18 +14,22 @@ const contactsSlice = createSlice({
         },
 
         extraReducers: {
-            [fetchContacts.pending](state, action) {
-
+            [fetchContacts.pending](state) {
+                state.isLoading = true;
             },  
             [fetchContacts.fetchTasks.fulfilled](state, action) {
-
+                state.isLoading = false;    
+                state.error = null;      
+                state.items = action.payload;
             },
             [fetchContacts.rejected](state, action) {
-
+                state.isLoading = false;      
+                state.error = action.payload;
             },  
         },
     });
 
+    export const contactsReducer = contactsSlice.reducer;
 
 // const contactsInitialState = {
 //     contacts: [
@@ -58,4 +62,4 @@ const contactsSlice = createSlice({
 
 // export const { addContact, deleteContact, filterChange } = contactsSlice.actions;
 // export const contactsReducer = contactsSlice.reducer;
-// export const getContacts = state => state.contacts.contacts;
+ export const getContacts = state => state.contacts.contacts;
