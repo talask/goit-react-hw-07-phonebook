@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { ButtonDel, TdUserData } from './Contacts.styled';
 
-export const ContactItem = ({ name, number, id, fnDelete}) => {
+export const ContactItem = ({ name, phone, id, fnDelete}) => {
     return (
         <tr>
             <TdUserData >{name}:</TdUserData > 
-            <TdUserData >{number}</TdUserData > 
+            <TdUserData >{phone}</TdUserData > 
             <TdUserData >
                 <ButtonDel type='button' 
                 onClick={() => {fnDelete(id)}}>

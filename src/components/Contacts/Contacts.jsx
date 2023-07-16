@@ -2,9 +2,9 @@
 import { ContactItem } from './ContactItem';
 import { Table } from './Contacts.styled';
 import { useDispatch, useSelector } from "react-redux";
-import { deleteContact, getContacts } from 'redux/contactsSlice';
-import { getFilter } from 'redux/filterSlice';
-
+import { deleteContact } from 'redux/operation';
+import { getFilter } from 'redux/selectors';
+import { getContacts } from 'redux/selectors';
 
 export const Contacts = () => {
     const contacts = useSelector(getContacts);
@@ -14,24 +14,29 @@ export const Contacts = () => {
     
     const fnDelete = (id) => {
         dispatch(deleteContact(id));
-      }
+      
+    }
 
     const visibleContacts = () => {
-        return contacts.filter(contact =>
-          contact.name.toLowerCase().includes(filter.toLowerCase()),
-        );
+        if(filter)
+            return contacts.filter(contact =>
+                contact.name.toLowerCase().includes(filter.toLowerCase()),
+            );
+        
+        return contacts;
       };
 
    
     return ( 
         contacts.length > 0 && <Table>
             <tbody>
-                {visibleContacts().map(({name, number, id}, i) => {
+                {visibleContacts().map(({name, phone, id}, i) => {
+                    console.log(name, phone, id)
                     return (
                         <ContactItem 
                             key={i}
                             name={name} 
-                            number={number} 
+                            phone={phone} 
                             id={id}
                             fnDelete={fnDelete}
                         ></ContactItem>

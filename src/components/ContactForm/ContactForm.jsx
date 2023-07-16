@@ -3,8 +3,10 @@ import { Button, DivMyForm, Label } from './ContactForm.styled';
 import * as yup from 'yup';
 import styled from 'styled-components';
 import { useDispatch } from "react-redux";
+// import { getContacts } from 'redux/selectors';
+import { fetchContacts } from 'redux/operation';
 
-import { addContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/operation';
 
 const InputField = styled(Field)`
     outline: none;
@@ -21,21 +23,23 @@ const ErrorField = styled(ErrorMessage)`
 
 const initialValues = {
   name: '',
-  number: '',
+  phone: '',
 };
 
 const nameRegExp = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
 const phoneRegExp = /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
 const schema = yup.object().shape({
   name: yup.string().matches(nameRegExp, 'Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d\'Artagnan').required(),
-  number: yup.string().matches(phoneRegExp, 'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +').required(),
+  phone: yup.string().matches(phoneRegExp, 'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +').required(),
 });
 
 export const ContactForm = () => {
   const dispatch = useDispatch();
 
   const handleContactsChange = (obj) => {
+    
     dispatch(addContact(obj));
+    dispatch(fetchContacts());   
   };
 
     return ( 
@@ -63,9 +67,9 @@ export const ContactForm = () => {
                 </Label>
                 <InputField 
                     type="tel"
-                    name="number"
+                    name="phone"
                 />
-                <ErrorField name="number" component="div" />
+                <ErrorField name="phone" component="div" />
                 <Button type="submit">Add contact</Button>
             </Form>
           </Formik>
