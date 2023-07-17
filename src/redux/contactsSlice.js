@@ -10,19 +10,20 @@ const contactsSlice = createSlice({
             error: null
             },
 
-        extraReducers: {
-            [fetchContacts.pending](state) {
+        extraReducers: (builder) => {
+            builder
+            .addCase(fetchContacts.pending, (state) => {
                 state.isLoading = true;
-            },  
-            [fetchContacts.fulfilled](state, action) {
+            })  
+            .addCase(fetchContacts.fulfilled, (state, action) =>{
                 state.isLoading = false;    
                 state.error = null;      
                 state.items = action.payload;
-            },
-            [fetchContacts.rejected](state, action) {
+            })
+            .addCase(fetchContacts.rejected, (state, action) => {
                 state.isLoading = false;      
                 state.error = action.payload;
-            },  
+            });  
         },
     });
 

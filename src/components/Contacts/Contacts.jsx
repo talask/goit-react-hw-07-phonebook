@@ -14,7 +14,7 @@ export const Contacts = () => {
     
     const fnDelete = (id) => {
         dispatch(deleteContact(id));
-      
+        
     }
 
     const visibleContacts = () => {

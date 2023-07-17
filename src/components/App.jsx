@@ -9,6 +9,8 @@ import { getIsLoading, getError } from "redux/selectors";
 import { Loader } from "./Loader/Loader";
 
 
+
+
 export const App = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(getIsLoading);

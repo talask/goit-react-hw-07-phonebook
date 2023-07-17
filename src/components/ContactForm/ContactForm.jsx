@@ -3,9 +3,6 @@ import { Button, DivMyForm, Label } from './ContactForm.styled';
 import * as yup from 'yup';
 import styled from 'styled-components';
 import { useDispatch } from "react-redux";
-// import { getContacts } from 'redux/selectors';
-import { fetchContacts } from 'redux/operation';
-
 import { addContact } from 'redux/operation';
 
 const InputField = styled(Field)`
@@ -37,9 +34,7 @@ export const ContactForm = () => {
   const dispatch = useDispatch();
 
   const handleContactsChange = (obj) => {
-    
-    dispatch(addContact(obj));
-    dispatch(fetchContacts());   
+    dispatch(addContact(obj));    
   };
 
     return ( 
