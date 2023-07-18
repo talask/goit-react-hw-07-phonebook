@@ -18,7 +18,7 @@ export const App = () => {
 
   useEffect(() => {
     dispatch(fetchContacts());
-    console.log("dispatch")
+   
   }, [dispatch]);
 
   return (

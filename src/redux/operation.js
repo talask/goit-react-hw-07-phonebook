@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 axios.defaults.baseURL = "https://64ac6cd59edb4181202f873a.mockapi.io/contacts";
 
@@ -17,8 +18,17 @@ export const fetchContacts = createAsyncThunk("contacts/fetchAll",
 export const addContact = createAsyncThunk(
     "contacts/addContacts",
     async (text, thunkAPI) => {
-      console.log("add");
+      
+    const state = thunkAPI.getState(); 
+    const existingContact = state.contacts.items.find((contact) => 
+    contact.name === text.name && contact.phone === text.phone );
+
+    if (existingContact) {
+      Notify.warning("Contact with the same name and phone already exists");
+      return thunkAPI.rejectWithValue("Contact with the same name and phone already exists");
+    }
       try {
+       
         const response = await axios.post("/contacts", { ...text });
         
         return response.data;
@@ -29,9 +39,16 @@ export const addContact = createAsyncThunk(
   );
 
   export const deleteContact = createAsyncThunk(
-    "tasks/deleteTask",
+    "contacts/deleteContacts",
     async (contactsId, thunkAPI) => {
-      console.log("delete");
+      
+      const state = thunkAPI.getState(); 
+      const existingContact = state.contacts.items.find((contact) => contact.id === contactsId);
+  
+      if (!existingContact) {
+        Notify.warning("Contact with the specified id does not exist");
+        return thunkAPI.rejectWithValue("Contact with the specified id does not exist");
+      }
       try {
         const response = await axios.delete(`/contacts/${contactsId}`);
         return response.data;

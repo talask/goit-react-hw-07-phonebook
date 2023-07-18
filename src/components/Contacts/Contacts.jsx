@@ -31,7 +31,7 @@ export const Contacts = () => {
         contacts.length > 0 && <Table>
             <tbody>
                 {visibleContacts().map(({name, phone, id}, i) => {
-                    console.log(name, phone, id)
+                   
                     return (
                         <ContactItem 
                             key={i}
